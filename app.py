@@ -71,6 +71,28 @@ def registration():
         email = request.form['email']
         password = request.form['password']
 
+        # Check if the email is already registered
+        cursor = mysql.connection.cursor()
+        cursor.execute('SELECT id FROM users WHERE email = %s', (email,))
+        existing_user = cursor.fetchone()
+        cursor.close()
+
+        if existing_user:
+            flash('Email is already registered. Please use a different email.', 'error')
+            return redirect(url_for('registration'))
+        
+        # check if rollNo is already registered
+
+        cursor = mysql.connection.cursor()
+        cursor.execute('SELECT id FROM users WHERE rollNo = %s', (rollNo,))
+        existing_user = cursor.fetchone()
+        cursor.close()
+
+        if existing_user:
+            flash('Roll Number is already registered. Please use a different Roll Number.', 'error')
+            return redirect(url_for('registration'))
+
+
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
         cursor = mysql.connection.cursor()
