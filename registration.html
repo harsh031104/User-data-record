@@ -43,7 +43,17 @@
       </div>
       <button type="submit" class="btn btn-dark">Submit</button>
       </form>
-      <p>Already have an account? <a href="{{ url_for('login') }}">Go to login page</a></p>
+      <p>Already have an account? <a href="{{ url_for('login') }}">Go to login page</a></p>{% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flashes">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+      {% endwith %}
+
+        
       </div>
       
         </div>
